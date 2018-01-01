@@ -390,6 +390,8 @@ def options(opt):
     opt.load('xcode')
     opt.load('xcode6')
 
+    opt.recurse('compat')
+
     # install directories
     opt.add_option('--htmldir', type='string', default=None, help='HTML documentation directory [Default: <prefix>/share/jack-audio-connection-kit/reference/html/')
     opt.add_option('--libdir', type='string', help='Library directory [Default: <prefix>/lib]')
@@ -483,6 +485,8 @@ def configure(conf):
 
     if conf.env['IS_MACOSX']:
         conf.check(lib='aften', uselib='AFTEN', define_name='AFTEN')
+
+    conf.recurse('compat')
 
     # configure all auto options
     configure_auto_options(conf)
@@ -990,6 +994,8 @@ def build(bld):
     if bld.variant:
         # only the wscript in common/ knows how to handle variants
         return
+
+    bld.recurse('compat')
 
     if not os.access('svnversion.h', os.R_OK):
         def post_run(self):
